@@ -1,0 +1,6 @@
+docker --version  // 查看 docker 版本
+docker images // 查看所以映像檔
+docker run ... // 執行映像檔，創建 container
+docker ps -a // 查看所有執行中的 container
+docker rm xxxxx // xxxxx => 5碼 ContainerID 移除 container
+docker rmi xxxxx // xxxxx => 5碼 Image ID 移除映像檔

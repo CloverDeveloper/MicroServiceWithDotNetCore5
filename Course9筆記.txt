@@ -1,0 +1,22 @@
+在 OrdersApi 安裝 Nuget 套件 Microsoft.AspNetCore.SignalR
+在 StartUp 建立 SignalR 註冊，下方 app 註冊 endpoints.MapHub<OrderHub>("/orderhub");
+建立 Hubs 資料夾，並建立 OrderHub 類別，繼承 SignalR Hub 類別
+RegisterOrderCommandConsumer 注入 IHubContext<OrderHub> hubContext，並在 Consume 方法中傳遞訊息
+OrderDispatchedEventConsumer 注入 IHubContext<OrderHub> hubContext，並在 Consume 方法中傳遞訊息
+在 Faces.WebMvc 安裝 siganlr ，專案右鍵 -> 加入 -> 客戶端程式庫
+提供者選取 unpkg
+程式庫輸入  @microsoft/signalr@5.0.0
+選擇特定檔案 -> dist -> browser -> 選擇 signalr.js，signalr.js.map，signalr.mini.js，signal.mini.js.map，4 個檔
+調整目標位置 wwwroot/lib/signalr/
+可以到 libman.json 查看安裝的檔案
+
+在 Faces.WebMvc 安裝 toastr.js ，用來呈現訊息，專案右鍵 -> 加入 -> 客戶端程式庫
+提供者選取 cdnjs
+程式庫輸入  toastr.js@2.1.4
+選擇特定檔案 -> toastr.mini.js，toastr.css，toastr.js.map，3個檔案
+調整目標位置 wwwroot/lib/toastr.js/
+
+分別將 toastr.css，toastr.mini.js 放入 Views -> Shared -> _Layout.cshtml 的 Header、Body 位置
+將 signalr.js 放到 Views -> OrderManagement -> Index.cshtml 
+在 Views -> OrderManagement -> Index.cshtml 底下實作 signalR 串接等方法
+

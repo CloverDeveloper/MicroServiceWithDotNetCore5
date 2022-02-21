@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  facesapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5300:80"
+
+  faces.webmvc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - OrdersApiUrl=http://localhost:5200
+      - SignalRHubUrl=http://localhost:5200
+    ports:
+      - "5100:80"
+
+
+  ordersapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - OrdersContextConnection=Server=sqldbService; Database=OrdersApiDb;user id=sa;password=Password123
+      - FacesApiurl=http://facesapi
+    ports:
+      - "5200:80"
+
+
+  notificationservice:
+     environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+

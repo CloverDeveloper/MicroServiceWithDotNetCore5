@@ -1,0 +1,57 @@
+version: '3.4'
+
+services:
+  facesapi:
+    image: ${DOCKER_REGISTRY-}facesapi
+    build:
+      context: .
+      dockerfile: Faces/FacesApi/Dockerfile
+
+  faces.webmvc:
+    image: ${DOCKER_REGISTRY-}faceswebmvc
+    build:
+      context: .
+      dockerfile: Faces.Web/Faces.WebMvc/Dockerfile
+    depends_on:
+      - rabbitmq
+      - ordersapi
+
+
+  ordersapi:
+    image: ${DOCKER_REGISTRY-}ordersapi
+    build:
+      context: .
+      dockerfile: Ordering/OrdersApi/Dockerfile
+    depends_on:
+      - rabbitmq
+      - sqlserver
+      - facesapi
+
+
+  notificationservice:
+    image: ${DOCKER_REGISTRY-}notificationservice
+    build:
+      context: .
+      dockerfile: CustomerNotification/NotificationService/Dockerfile
+    depends_on:
+      - rabbitmq
+
+
+  sqldbService:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    container_name: sqlserver
+    environment:
+        ACCEPT_EULA: Y
+        SA_PASSWORD: "Password123"
+    ports:
+        - "1403:1433"
+
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmqFace
+    ports:
+        - "15672:15672"
+        - "5672:5672"
+
+

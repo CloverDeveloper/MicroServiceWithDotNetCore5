@@ -1,0 +1,29 @@
+新增 CustomerNotification 資料夾，並新增 NotificationService 的主控台應用程式專案
+新增 EmailService 類別庫專案
+於主控台專案新增 Messaging.InterfacesConstants 、 EmailService 專案參考
+安裝 Nuget 套件 Microsoft.Extensions.Configuration.Abstractions、Microsoft.Extensions.Hosting、MassTransit(6.2.5)、MassTransit.RabbitMQ(6.2.5)、MassTransit.Extensions.DependencyInjection(6.2.5)
+實作 Program.cs 方法，建立 Hosting 
+於 Messaging.InterfacesConstants 專案 Constant 資料夾 RabbitmqMassTransitConstants 類別新增參數 NotificationServiceQueue
+於 Messaging.InterfacesConstants 專案 Events 資料夾，新增 IOrderProcessedEvent 介面
+在主控台專案建立 Consumer 資料夾，並新增 OrderProcessedEventConsumer 類別，繼承 IConsumer<IOrderProcessedEvent>
+於主控台專案建立 BusService 類別並繼承 IHostedService 並實作方法
+安裝 Nuget 套件 System.Drawing.Common
+實作 OrderProcessedEventConsumer 類別
+於 Messaging.InterfacesConstants 專案 Events 資料夾，新增 IOrderDispatchedEvent 介面
+於 EmailService 類別庫專案安裝 Nuget 套件 NETCore.MailKit
+EmailService 類別庫專案 新增 Message 類別，實作內容
+新增 IEmailSender 介面
+新增 EmailSender 類別，並實作 IEmailSender
+新增 EmailConfig 類別，並設定屬性
+於主控台專案建立 appsettings.json 檔，加入 EmailConfiguration 屬性設定，並設定為 有更新就複製到輸出目錄 
+實作 EmailSender 類別
+OrderProcessedEventConsumer 類別注入 IEmailSender ，並完成寄信功能串接
+Program 新增載入 appsetting.json 檔，並註冊 IEmailSender 
+在 OrdersApi 專案 Messages 資料夾下的 Consumers 資料夾新增 OrderDispatchedEventConsumer 類別，並繼承 IConsumer<IOrderDispatchedEvent>
+在 RabbitmqMassTransitConstants 類別加入新的接收端點 OrderDispatchedServiceQueue
+在 OrdersApi 專案 StartUp 新增 OrderDispatchedEventConsumer 注入
+OrderDispatchedEventConsumer 實作
+注意 
+1.Email 是否允許低風險應用程式發信
+2.RegisterOrderCommandConsumer 底下需 Push 資料到 IOrderProcessedEvent
+3.NotificationService 的主控台應用程式專案底下需要 Images 資料夾存放取得的圖片

@@ -1,0 +1,25 @@
+新增 Ordering 資料夾，並新增 Web API 專案 OrdersApi 
+安裝 Nuget 套件 MassTransit(6.2.5)、MassTransit.RabbitMq(6.2.5)、MassTransit.Extensions.DependencyInjection(6.2.5)、Microsoft.EntityFrameworkCore、Microsoft.EntityFrameworkCore.SqlServer、Microsoft.EntityFrameworkCore.Tools
+在 Startup 設置相關註冊方法
+新增 Messages 資料夾，裡面新增 Consumers 資料夾，裡面新增 RegisterOrderCommandConsumer 類別，繼承 IConsumer<IRegisterOrderCommand> 介面
+在 Startup 設置相關 RegisterOrderCommandConsumer 註冊方法
+加入 Services 資料夾，建立 BusService 類別，並繼承 IHostedService 介面且實作介面
+於 StartUp 註冊相關類別 BusService
+建立 Models 資料夾，並加入 Order、OrderDetail、Status(Enum) 類別
+建立 Persistence 資料夾，並加入 OrdersContext 類別，並繼承 DbContext，並撰寫 DbSet 等屬性
+在 StartUp 註冊 DbContext，並於 appsetting.json 設定連線字串
+於套件管理主控台輸入指令(注意預設啟動專案) PM> add-migration "initial"(xxx) -output Persistence/Migrations 初始化修改
+
+使用 Docker 建立 mssql Container
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Password123" --name ordermssql -p 1445:1433 mcr.microsoft.com/mssql/server
+
+於套件管理主控台輸入指令(注意預設啟動專案) PM> update-database 將修改更新到資料庫
+
+建立 IOrderRepository 介面並實作相關方法
+在 StartUp 註冊 IOrderRepository 
+撰寫 RegisterOrderCommandConsumer 類別內的方法
+
+調整 FacesApi 專案內的 FacesController ReadFaces 方法，回傳 Tuple
+在 OrderApi 專案 StartUp 註冊 AddHttpClient 並在 RegisterOrderCommandConsumer 類別內引入
+
+RegisterOrderCommandConsumer 串接 FacesApi 方法並寫入 DB

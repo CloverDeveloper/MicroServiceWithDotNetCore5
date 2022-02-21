@@ -1,0 +1,27 @@
+建立 rabbitmq container
+-p 左邊為 host port 號，右邊是 container 的 port 號
+--name Container 的名字為 rabbit-corona
+rabbitmq:3-management 使用 rabbitmq 映像檔 Tag 為 3-managemen 建立 Container，會從 library/rabbitmq Pull 下來
+docker run -p 15672:15672 -p 5672:5672 --name rabbit-corona rabbitmq:3-management
+
+建立 Faces.SharedLib 並建立 Messaging.InterfacesConstants 類別庫專案
+建立 Commands、Constants、Events 資料夾
+在 Constants 資料夾內建立 RabbitmqMassTransitConstants 類別
+在類別中新增 RabbitMquri、UserName、Password、RegisterOrderServiceQueue 等常數並設定值
+在 Command 資料夾內建立建立 IRegisterOrderCommand 介面
+在介面中建立 PictureUrl、UserEmail、ImageData 等屬性
+
+新增 Faces.Web 資料夾，並建立 Faces.WebMvc 專案
+安裝 Nuget 套件 MassTransit(6.2.5)、MassTransit.RabbitMq(6.2.5)、MassTransit.Extensions.DependencyInjection(6.2.5)
+引入 Messaging.InterfacesConstants 專案參考
+加入 Services 資料夾，建立 BusService 類別，並繼承 IHostedService 介面且實作介面
+於 StartUp 註冊相關類別
+
+建立 ViewModels 資料夾，並建立 OrderViewModel 類別，並撰寫屬性
+於 HomeController 建立 RegisterOrder 的 Get、Post 方法
+建立 RegisterOrder 的 View
+調整 View 資料夾的 Shared 資料夾 Layou 頁面，調整連結到 RegisterOrder
+在 wwwroot 內建立 images 資料夾
+建立 Thanks 的 View
+在 rabbitmq web 的 queue 標籤建立一個 queue 並於 Exchanges 設定綁定此 queue
+在 rabbitmq web 的 queue 標籤點選名稱，進入頁面後可點選 GetMessage 查詢 queue 中的訊息資料

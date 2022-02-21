@@ -1,0 +1,11 @@
+建立空白方案
+加入 Faces 資料夾，並加入 WebAPI 專案 FacesApi
+新增 FacesController 至 Controller
+安裝 Nuget 套件 OpenCvSharp4、OpenCvSharp4.Windows
+建立 CascadeFile 資料夾，並加入資源檔 haarcascade_frontalface_default.xml
+撰寫 FacesController 解析圖片方法
+於 Faces 資料夾，加入主控台專案 FacesApiTest
+新增 ImageUtility 類別至 FacesApiTest 專案
+安裝 nuget 套件 System.Drawing.Common、Newtonsoft.Json
+撰寫讀取圖檔方法、轉換 byte 為圖檔方法
+於 Program 撰寫呼叫 API 方法與儲存呼叫結果圖檔方法

@@ -1,0 +1,41 @@
+專案點選右鍵 -> 加入 -> Docker 支援 -> 選擇 Linux 
+創建的 Dockerfile 包含 .dockerignore 檔
+讀取 Dockerfile 設定
+移除一些方案的設定，盡量不要影響手動設定 Docker 流程
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS> 移除
+    <DockerfileContext>.</DockerfileContext> 移除
+  </PropertyGroup>
+
+  <ItemGroup>移除
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" /> 移除
+  </ItemGroup>移除
+
+</Project>
+
+開啟 cmd 並移動路徑到方案底下(dockerfile上一層)
+  -f 為 dockerfile 意思，後面接位置
+  -t 為 image 名稱
+執行 docker build -f Dockerfile -t simpleapi . 建置 image
+-p 為映像檔執行時對應 port 號
+--name 為 container 名稱，後面接 image 名稱
+執行 docker run -p 5700:80 --name simplecontainer simpleapi
+
+
+調整專案 HardCode 部分，改為使用設定在 appsetting.json 檔中，並新增 Appsetting 類別，
+在 StartUp 那設定 service.Configure<Appsetting>(Configuration)，
+並在 HardCode 的地方注入 IOptions<Appsetting> setting，並使用參數替換原先 HardCode 值
+
+在 OrdersContext 內新增 MigrateDB() 方法，並在 StartUp 下方 Configure 方法中使用，以便 docker container 建立時一併建立 DB 資料表
+
+在 NotificationService 專案中新增 Nuget 套件 SixLabors.ImageSharp(1.0.0 搶鮮版)、SixLabors.ImageSharp.Drawing(1.0.0 搶鮮版)
+調整 Consume 方法
+
+
+每個專案都新增一個 Dockerfile
+在專案上右鍵 -> 加入 -> 容器協調器支援 -> 選擇 Docker Compose -> 選擇 Linux 建立，每個專案都要
+修改 docker-compose.yml 加入各專案的 depends_on ，新增 sqldbService 、 rabbitmq 設定
+修改 docker-compose.override.yml 中 environment、ports 設定

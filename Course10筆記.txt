@@ -1,0 +1,7 @@
+調整人臉辨識 API 方法，使用微軟 Azure 認知服務的人臉辨識
+FacesApi 的 appsetting.json 新增 呼叫 API 用金鑰與網址
+調整 Nuget 套件移除舊的安裝，新增 Microsoft.Azure.CognitiveServices.Vision.Face(搶鮮版 2.5.0)、SixLabors.ImageSharp(搶鮮版 1.0.0)、SixLabors.ImageSharp.Drawing(搶鮮版 1.0.0)
+新增 AzureFaceConfiguration 類別承接 appsetting.json 設定
+調整 StartUp 注入 AzureFaceConfiguration，設定同步調用方法
+設定 ImageSharp 使用的同步方法調用設定
+修改 Controllers -> FacesController -> 辨識臉部方法，串接 API ，注入 Configuration

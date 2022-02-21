@@ -1,0 +1,10 @@
+於 OrdersApi 專案 Controller 資料夾建立 OrdersController，並實作方法
+於 StartUp 新增 CorsPolicy 註冊
+於 Faces.WebMvc 安裝 Nuget 套件 Refit 
+新增 ResetClients 資料夾 ，新增 IOrderManagementApi 介面，新增 OrderManagementApi 並繼承 IOrderManagementApi 且實作
+修改 appsettings.json，新增 ApiServiceLocations 參數
+於 Controller 資料夾新增 OrderManagementController ，並實作方法
+於 Views 資料夾內新增 OrderManagement 資料夾，並新增 Index 頁面，並整合頁面
+於 OrderManagementController 新增 Details 方法
+於 ViewModel 資料夾新增 OrderDetailViewModel 類別，並再 OrderViewModel 裡新增  OrderDetails 屬性
+於 Views 資料夾內新增 Details.cshtml，並整合頁面
